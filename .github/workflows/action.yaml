@@ -1,0 +1,14 @@
+name: Build and Scan Image
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+
+jobs:
+  basic-ubuntu-20:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Build and Scan Image
+        uses: ISID/build-and-scan-image@v0.2.
+  
