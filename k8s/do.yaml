@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: masternode
-        image: sotcsa/energi:latest
+        image: sotcsa/energi:2cec78a
         resources:
           limits:
             memory: 4Gi
