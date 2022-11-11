@@ -27,9 +27,9 @@ spec:
         image: sotcsa/energi:latest
         resources:
           limits:
-            memory: 2Gi
+            memory: 4Gi
         volumeMounts:
-        - mountPath: "/home/energiuser/.energicore3"
+        - mountPath: "/root/.energicore3"
           name: csi-pvc
   volumeClaimTemplates:
   - metadata:
