@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: energi
+  name: energi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-csi-app-set
+  namespace: energi
+spec:
+  selector:
+    matchLabels:
+      app: mypod
+  serviceName: "my-frontend"
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: mypod
+    spec:
+      containers:
+      - name: masternode
+        image: sotcsa/energi:latest
+        resources:
+          limits:
+            memory: 2Gi
+        volumeMounts:
+        - mountPath: "/home/energiuser/.energicore3"
+          name: csi-pvc
+  volumeClaimTemplates:
+  - metadata:
+      name: csi-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+      storageClassName: do-block-storage 
