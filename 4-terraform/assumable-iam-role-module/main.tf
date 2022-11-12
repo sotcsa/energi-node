@@ -17,16 +17,6 @@ data "aws_caller_identity" "this" {
   provider = aws
 }
 
-data "aws_iam_policy_document" "assume_role_in_same_account" {
-  statement {
-    actions = ["sts:AssumeRole"]
-    principals {
-      type        = "AWS"
-      identifiers = ["arn:aws:iam::${data.aws_caller_identity.this.account_id}:root"]
-    }
-  }
-}
-
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect    = "Allow"
@@ -61,8 +51,12 @@ resource "aws_iam_role" "this" {
   assume_role_policy = data.aws_iam_policy_document.assume_role_in_same_account.json
 }
 
-terraform {
-  backend "local" {
-    path = "state/terraform.tfstate"
+data "aws_iam_policy_document" "assume_role_in_same_account" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.this.account_id}:root"]
+    }
   }
 }
