@@ -15,7 +15,7 @@ docker/publish:
 k8s/redeploy: k8s/delete k8s/deploy
 
 k8s/delete:
-	kubectl delete -f k8s/do.yaml  || true
+	kubectl delete -f k8s/statefulset.yaml  || true
 
 k8s/deploy:
-	kubectl apply -f k8s/do.yaml 
+	kubectl apply -f k8s/statefulset.yaml 
