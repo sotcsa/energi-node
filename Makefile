@@ -12,3 +12,10 @@ docker/publish:
 	docker push sotcsa/energi
 	docker push sotcsa/energi:$$(git log -1 --format=%h)
 	
+k8s/redeploy: k8s/delete k8s/deploy
+
+k8s/delete:
+	kubectl delete -f k8s/do.yaml  || true
+
+k8s/deploy:
+	kubectl apply -f k8s/do.yaml 
