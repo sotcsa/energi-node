@@ -3,3 +3,9 @@ variable "prefix" {
   type        = string
   default     = null
 }
+
+variable "use_suffix" {
+  description = "Add suffix for entities, like for iam usr: {prefix}-user"
+  type        = bool
+  default     = true
+}

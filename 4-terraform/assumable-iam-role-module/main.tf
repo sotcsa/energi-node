@@ -2,7 +2,7 @@
 # IAM User #
 ############
 resource "aws_iam_user" "this" {
-  name          = "${var.prefix}-user"
+  name          = local.iam_user_name
   force_destroy = true
 }
 
@@ -10,7 +10,7 @@ resource "aws_iam_user" "this" {
 # IAM Group #
 #############
 resource "aws_iam_group" "this" {
-  name = "${var.prefix}-group"
+  name = local.iam_group_name
 }
 
 data "aws_caller_identity" "this" {
@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "assume_role" {
 }
 
 resource "aws_iam_policy" "this" {
-  name        = "${var.prefix}-policy"
+  name        = local.iam_policy_name
   description = "Allows to assume role"
   policy      = data.aws_iam_policy_document.assume_role.json
 }
@@ -37,8 +37,8 @@ resource "aws_iam_group_policy_attachment" "this" {
 }
 
 resource "aws_iam_group_membership" "this" {
+  name  = local.iam_group_name
   group = aws_iam_group.this.id
-  name  = "${var.prefix}-group"
   users = [aws_iam_user.this.name]
 }
 
@@ -47,7 +47,7 @@ resource "aws_iam_group_membership" "this" {
 # IAM Role #
 ############
 resource "aws_iam_role" "this" {
-  name               = "${var.prefix}-role"
+  name               = local.iam_role_name
   assume_role_policy = data.aws_iam_policy_document.assume_role_in_same_account.json
 }
 
