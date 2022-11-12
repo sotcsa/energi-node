@@ -2,7 +2,7 @@
 # IAM User #
 ############
 resource "aws_iam_user" "this" {
-  name = "${var.prefix}-user"
+  name          = "${var.prefix}-user"
   force_destroy = true
 }
 
@@ -21,7 +21,7 @@ data "aws_iam_policy_document" "assume_role" {
   statement {
     effect    = "Allow"
     actions   = ["sts:AssumeRole"]
-    resources = [ aws_iam_role.this.arn ]
+    resources = [aws_iam_role.this.arn]
   }
 }
 
@@ -39,7 +39,7 @@ resource "aws_iam_group_policy_attachment" "this" {
 resource "aws_iam_group_membership" "this" {
   group = aws_iam_group.this.id
   name  = "${var.prefix}-group"
-  users = [ aws_iam_user.this.name ]
+  users = [aws_iam_user.this.name]
 }
 
 
@@ -47,7 +47,7 @@ resource "aws_iam_group_membership" "this" {
 # IAM Role #
 ############
 resource "aws_iam_role" "this" {
-  name  = "${var.prefix}-role"
+  name               = "${var.prefix}-role"
   assume_role_policy = data.aws_iam_policy_document.assume_role_in_same_account.json
 }
 
